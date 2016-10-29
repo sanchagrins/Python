@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Purpose: Exercise for Coursera Class Using Python to Access Web Data.
+#          Reads through a file, extracts numbers using regex and sums them.
 
 import re
 
