@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 
 # Sets wikipedia URL
 url = 'https://en.wikipedia.org/wiki/List_of_dinosaur_genera'
+print "Scrapping " + url
 
 # Preps Beautiful Soup for scraping
 html = urllib.urlopen(url).read()
@@ -44,7 +45,7 @@ for t in titles:
             # Removes duplicates
             flat = [item for sublist in dinoList for item in sublist]
             flat = set(flat)
-print "Scraped " + len(flat) + "elements from " + url
+print "Scraped " + str(len(flat)) + " elements."
 
 # XML output prep
 root = ET.Element("dinosaurs")
@@ -53,6 +54,7 @@ name = ET.SubElement(child, "Name")
 ID = ET.SubElement(child, "ID")
 
 # Reads through list, converts to XML
+print "Generating XML..."
 for d in flat:
     count = count + 1
     did = str(count)
@@ -64,4 +66,4 @@ for d in flat:
 xmlstr = xml.dom.minidom.parseString(ET.tostring(root)).toprettyxml()
 with open("dinoXML.xml", "w") as f:
     f.write(xmlstr)
-
+print "Done!"
