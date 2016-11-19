@@ -20,7 +20,7 @@ tags = soup('a')
 
 tot = 0
 val = 0
-count = 0
+count = 1
 titles = []
 excludes = ["bird", "reptile", "fish", "NoTitle", "Enlarge", 'Help:Category', 'Wikipedia:About']
 dinoList = []
@@ -38,13 +38,24 @@ for t in titles:
             flat = set(flat)
 print flat
 
-dinos = ET.Element("dinosaurs")
-dino = ET.SubElement(dinos, "dinosaur")
+root = ET.Element("dinosaurs")
+child = ET.SubElement(root, "dinosaur")
+name = ET.SubElement(child, "Name")
+ID = ET.SubElement(child, "ID")
 
-ET.SubElement(dino, "Name").text = "Test Name"
-ET.SubElement(dino, "ID").text = "1"
+for d in flat:
+    count = count + 1
+    did = str(count)
+    child = ET.Element("dinosaur", ID=did)
+    root.append(child)
+    element = ET.SubElement(child, "Name").text= d
+    #ET.SubElement(child, "ID").text = did
+    #ET.SubElement(root, "NAME", ID=did).text = d
+    #ET.SubElement(child, "NAME").text = d
+    #ET.SubElement(name, "NAME").text = d
+    #ET.SubElement(ID, "ID")
 
-xmlstr = xml.dom.minidom.parseString(ET.tostring(dinos)).toprettyxml()
+xmlstr = xml.dom.minidom.parseString(ET.tostring(root)).toprettyxml()
 with open("NewXML.xml", "w") as f:
     f.write(xmlstr)
 
